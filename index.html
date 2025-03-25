@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project</title>
+    <style>
+        @keyframes shooting-star {
+            0% { transform: translate(0, 0); opacity: 1; }
+            100% { transform: translate(-100vw, 100vh); opacity: 0; }
+        }
+
+        .shooting-star {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 4px;
+            background: white;
+            box-shadow: 0 0 10px white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: shooting-star 2s linear infinite;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            background: linear-gradient(to right, #1cb6e1, #90b6df), 
+                        url('https://images4.alphacoders.com/101/1011715.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-blend-mode: overlay;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            overflow: hidden; /* Impede o scroll */
+        }
+
+        h1 {
+            color: white;
+            text-shadow: 2px 2px 5px rgb(0, 128, 255);
+            font-size: 2.5em;
+            max-width: 800px;
+        }
+
+        p {
+            color: #ffffff;
+            font-size: 1.2em;
+            max-width: 800px;
+            line-height: 1.5;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+
+        .images {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .images img {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            max-width: 600px; /* Limita a largura para não ficar muito largo */
+            position: relative; /* Permite posicionamento dos botões dentro da área */
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 1.2em;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .happy {
+            background-color: #4CAF50;
+            color: white;
+            z-index: 1; /* Coloca o botão feliz acima do triste */
+        }
+
+        .happy:hover {
+            background-color: #45a049;
+        }
+
+        .sad {
+            background-color: #f44336;
+            color: white;
+            position: relative; /* Faz o botão se mover dentro do container */
+            z-index: 0;
+        }
+
+        .invalid-message {
+            color: #f44336;
+            font-size: 1.2em;
+            margin-top: 20px;
+            background: rgba(255, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        /* Responsividade para dispositivos móveis */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            p {
+                font-size: 1em;
+                padding: 15px;
+            }
+
+            .buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            button {
+                width: 90%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Bem-vinda ao meu site, Srta. Hartaby</h1>
+    
+    <div class="images">
+        <img src="hartaby.png" alt="linda">
+        <img src="hartaby2.png" alt="linda2">
+    </div>
+
+    <p>
+        Sabe quando você encontra uma música nova e, já na primeira vez que escuta, sente que ela tem algo especial? 
+        Foi essa a sensação que tive ao conversar com você. Em tão pouco tempo, trocamos palavras que pareceram leves, 
+        mas deixaram marcas bonitas. Por isso, estranhei seu silêncio. Talvez seja apenas o tempo te pedindo calma, ou 
+        talvez eu tenha sido só uma nota passageira na sua melodia. De qualquer forma, queria que soubesse que gostei 
+        muito de te conhecer. Se um dia quiser continuar essa conversa, estarei por aqui. Se não, te desejo um caminho cheio de luz.
+    </p>
+
+    <p>Caso precise de uma direção, escolha um dos caminhos abaixo:</p>
+
+    <div class="buttons">
+        <button class="happy" onclick="window.location.href='https://api.whatsapp.com/send/?phone=5562993678194&text&type=phone_number&app_absent=0'">Caminho da Felicidade</button>
+        <button class="sad" id="sadButton" onclick="showInvalidMessage()">Caminho da Tristeza</button>
+    </div>
+
+    <div id="invalidMessage" class="invalid-message" style="display: none;">
+        Opção inválida, clique na primeira.
+    </div>
+
+    <script>
+        // Função que exibe a mensagem de opção inválida
+        function showInvalidMessage() {
+            document.getElementById("invalidMessage").style.display = "block";
+            setTimeout(function() {
+                document.getElementById("invalidMessage").style.display = "none";
+            }, 3000); // Mensagem desaparece após 3 segundos
+        }
+
+        // Criar efeito de estrelas cadentes
+        function createShootingStar() {
+            const star = document.createElement("div");
+            star.classList.add("shooting-star");
+
+            star.style.top = Math.random() * window.innerHeight + "px";
+            star.style.right = Math.random() * 100 + "vw";
+
+            const size = Math.random() * 3 + 2;
+            star.style.width = size + "px";
+            star.style.height = size + "px";
+
+            star.style.animationDuration = Math.random() * 1.5 + 1 + "s";
+
+            document.body.appendChild(star);
+
+            setTimeout(() => {
+                star.remove();
+            }, 2000);
+        }
+
+        setInterval(createShootingStar, 500);
+    </script>
+
+</body>
+</html>
